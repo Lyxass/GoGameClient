@@ -50,7 +50,7 @@ int main() {
 
 
     if (message[0] - '0' == 1) {
-
+        cout << "Looking for a 2 player . . ."<< endl;
         while (1) {
             play(sock_C, sa_S, taille_sa_S);
             receiveBoard(sock_C, sa_S, taille_sa_S);
