@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lyxas/CLionProjects/gogameclient/main.cpp
+sys/socket.h
+-
+sys/un.h
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+strings.h
+-
+unistd.h
+-
+stdlib.h
+-
+stdio.h
+-
+iostream
+-
+
