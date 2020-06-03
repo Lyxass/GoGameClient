@@ -40,10 +40,15 @@ int main() {
 
     /* emission vers le serveur (a partir du client) */
     taille_sa_S = sizeof(struct sockaddr);
-    cout << "Enter your pseudo without space. You can use _ instead :" << endl;
-    scanf("%s", message);
+    cout << "Enter your pseudo without space. You can use _ instead : TEST" << endl;
+    cin >> message;
+    message[2047] = '0';
+
+
     sendto(sock_C, message, 2048 * sizeof(char), 0,
            (struct sockaddr *) &sa_S, taille_sa_S);
+    perror("pseudo");
+
     /* reception du serveur et affichage */
     recvfrom(sock_C, message, 2048 * sizeof(char), 0,
              (struct sockaddr *) &sa_S, &taille_sa_S);
@@ -87,7 +92,7 @@ void play(int sock_C, sockaddr_in sa_S, unsigned int taille_sa_S) {
     char msg[2048];
     receiveBoard(sock_C, sa_S, taille_sa_S);
     while (1) {
-        receiveBoard(sock_C, sa_S, taille_sa_S);
+
         recvfrom(sock_C, msg, 2048 * sizeof(char), 0,
                  (struct sockaddr *) &sa_S, &taille_sa_S);
         cout << msg << endl;
@@ -115,6 +120,9 @@ void play(int sock_C, sockaddr_in sa_S, unsigned int taille_sa_S) {
         if (msg[0] = 'o' && msg[1] == 'k' && msg[2] == '\0') {
             cout << "ok bien reçu !" << endl;
             break;
+        }
+        else{
+            receiveBoard(sock_C, sa_S, taille_sa_S);
         }
 
 
