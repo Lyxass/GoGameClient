@@ -65,7 +65,7 @@ int main() {
 
         while (1) {
             receiveBoard(sock_C, sa_S, taille_sa_S);
-            cout << "Wait please, J2 is playing" << endl;
+            cout << "Wait please, J1 is playing" << endl;
             play(sock_C, sa_S, taille_sa_S);
         }
     } else {
@@ -97,9 +97,12 @@ void play(int sock_C, sockaddr_in sa_S, unsigned int taille_sa_S) {
                  (struct sockaddr *) &sa_S, &taille_sa_S);
         cout << msg << endl;
         int x, y;
+        string input;
         while (1) {
-            scanf("%d,%d", &x, &y);
-            if (x >= 0 && x <= 8 && y >= 0 && y <= 8) {
+            cin >> input;
+            x = input[0] - '0';
+            y = input[2] - '0';
+            if (x<=8 && x>=0 && y<=8 && y>=0 && input[1] == ',' && input.size()==3) {
                 break;
             }
             cout << "Invalid move, x and y must be greater or equal to 0 and lower or equal to 8" << endl;
