@@ -61,15 +61,16 @@ MainWindow::MainWindow(int nbPlay,int sock_C,sockaddr_in sa_S,unsigned int taill
     scoreJ1->setStyleSheet("background-color: rgba(255, 255, 255, 0.0);");
     scoreJ2->setStyleSheet("background-color: rgba(255, 255, 255, 0.0);");
 
-    scoreJ1->setText(QString("Nb J1 : 0"));
-    scoreJ2->setText(QString("Nb  J2 : 0"));
+    scoreJ1->setText(QString("Nb Pawn captured by J1 : 0"));
+    scoreJ2->setText(QString("Nb Pawn captured by J2 : 0"));
 
-    scoreJ1->setGeometry(0,429,429,20);
-    scoreJ2->setGeometry(0,450,429,20);
+    scoreJ1->setGeometry(0,429,300,20);
+    scoreJ2->setGeometry(0,450,300,20);
     scene->addWidget(scoreJ1);
     scene->addWidget(scoreJ2);
-    QPushButton test("Skip your turn");
-    scene->addWidget(&test);
+    passButton = new GoPassButton("Skip your turn",this,this);
+    passButton->setGeometry(329,429,100,41);
+    scene->addWidget(passButton);
 
 }
 
@@ -105,6 +106,8 @@ void MainWindow::enableButton(bool b){
             matrix[i][o]->setEnabled(b);
         }
     }
+    passButton->setEnabled(b);
+
 }
 
 void MainWindow::play(GoPawn *p){
@@ -147,6 +150,12 @@ void MainWindow::updateMap(){
              (struct sockaddr *) &sa_S, &taille_sa_S);
     enableButton(true);
     qDebug() << message;
+    QString tmp(message);
+    if(tmp.contains("stop")){
+        enableButton(false);
+        QMessageBox::information(this,"END","It's the end of the Game ! You can now count the points");
+        return;
+    }
     for(int o=0;o<81;o++){
         if(message[o]=='X'){
             matrix[o/9][o%9]->setIcon(QIcon(QPixmap("/home/lyxas/GoGameCleintGui/noir.png")));
@@ -184,3 +193,22 @@ void MainWindow::updateMap(){
     enableButton(false);
 }
 
+void MainWindow::passTurn(){
+    sendto(sock_C, "pass", 2048 * sizeof(char), 0,
+           (struct sockaddr *) &sa_S, taille_sa_S);
+
+    recvfrom(sock_C, message, 2048 * sizeof(char), 0,
+             (struct sockaddr *) &sa_S, &taille_sa_S);
+    if(message[0] != 'o' || message[1] != 'k'){
+        updateMap();
+        QMessageBox::warning(this,"Invalid Move","Invalid move. It's your turn");
+        return;
+    }
+    enableButton(false);
+    QMessageBox::information(this,"Wait","The other player is playing");
+    updateMap();
+    updateMap();
+    QMessageBox::information(this,"Your turn","It's your turn");
+    enableButton(true);
+
+}

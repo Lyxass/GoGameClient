@@ -11,6 +11,7 @@
 #include <QMessageBox>
 #include <QLabel>
 #include <golabel.h>
+#include <gopassbutton.h>
 
 class MainWindow : public QWidget
 {
@@ -26,6 +27,7 @@ public:
     void enableButton(bool b);
     void updateMap();
     void play(GoPawn *p);
+    void passTurn();
     ~MainWindow();
 private:
     GoPawn *matrix[9][9];
@@ -43,6 +45,8 @@ private:
     GoLabel *scoreJ2;
 
     char message[2048];
+    bool isGameOver;
+    GoPassButton *passButton;
 
 };
 

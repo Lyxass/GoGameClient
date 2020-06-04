@@ -3,12 +3,14 @@ QT += widgets
 
 SOURCES += \
     golabel.cpp \
+    gopassbutton.cpp \
     gopawn.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     golabel.h \
+    gopassbutton.h \
     gopawn.h \
     mainwindow.h
 
