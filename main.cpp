@@ -55,15 +55,15 @@ int main() {
 
 
     if (message[0] - '0' == 1) {
-        cout << "Looking for a 2 player . . ."<< endl;
-        while (1) {
+        cout << "Looking for a 2 player . . ." << endl;
+        while (true) {
             play(sock_C, sa_S, taille_sa_S);
             receiveBoard(sock_C, sa_S, taille_sa_S);
             cout << "Wait please, J2 is playing" << endl;
         }
     } else if (message[0] - '0' == 2) {
 
-        while (1) {
+        while (true) {
             receiveBoard(sock_C, sa_S, taille_sa_S);
             cout << "Wait please, J1 is playing" << endl;
             play(sock_C, sa_S, taille_sa_S);
@@ -84,8 +84,14 @@ void receiveBoard(int sock_C, sockaddr_in sa_S, unsigned int taille_sa_S) {
     char msg[2048];
     recvfrom(sock_C, msg, 2048 * sizeof(char), 0,
              (struct sockaddr *) &sa_S, &taille_sa_S);
-    system("clear");
-    cout << "Ce que j'ai reçu \n" << msg << endl;
+    string str(msg);
+    if (str.substr(0, 4) == "stop") {
+        cout << "End of the game ! You can count the points !" <<endl;
+        close(sock_C);
+        exit(EXIT_SUCCESS);
+    } else {
+        system("clear");
+    }
 }
 
 void play(int sock_C, sockaddr_in sa_S, unsigned int taille_sa_S) {
@@ -102,33 +108,33 @@ void play(int sock_C, sockaddr_in sa_S, unsigned int taille_sa_S) {
             cin >> input;
             x = input[0] - '0';
             y = input[2] - '0';
-            if (x<=8 && x>=0 && y<=8 && y>=0 && input[1] == ',' && input.size()==3) {
+
+            string tmp = input.substr(0, 4);
+            if (tmp == "pass" && input.size() == 4) {
+                sendto(sock_C, tmp.c_str(), 2048 * sizeof(char), 0,
+                       (struct sockaddr *) &sa_S, taille_sa_S);
+                break;
+            }
+            if (x <= 8 && x >= 0 && y <= 8 && y >= 0 && input[1] == ',' && input.size() == 3) {
+                msg[0] = x + '0';
+                msg[1] = ',';
+                msg[2] = y + '0';
+                msg[3] = '\0';
+                sendto(sock_C, msg, 2048 * sizeof(char), 0,
+                       (struct sockaddr *) &sa_S, taille_sa_S);
                 break;
             }
             cout << "Invalid move, x and y must be greater or equal to 0 and lower or equal to 8" << endl;
 
         }
-        msg[0] = x + '0';
-        msg[1] = ',';
-        msg[2] = y + '0';
-        msg[3] = '\0';
-        sendto(sock_C, msg, 2048 * sizeof(char), 0,
-               (struct sockaddr *) &sa_S, taille_sa_S);
-
-
         recvfrom(sock_C, msg, 2048 * sizeof(char), 0,
                  (struct sockaddr *) &sa_S, &taille_sa_S);
 
 
-        if (msg[0] = 'o' && msg[1] == 'k' && msg[2] == '\0') {
-            cout << "ok bien reçu !" << endl;
+        if (msg[0] == 'o' && msg[1] == 'k' && msg[2] == '\0') {
             break;
-        }
-        else{
+        } else {
             receiveBoard(sock_C, sa_S, taille_sa_S);
         }
-
-
-        cout << "tu es bloqué ?" << endl;
     }
 }
