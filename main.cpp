@@ -31,11 +31,16 @@ int main() {
     /* creation socket Client */
     sock_C = socket(PF_INET, SOCK_DGRAM, 0);
 
+    cout << "Entrer l'adresse IP du serveur : (example : 157.12.155.154)\n";
+    string ip;
+    cin >> ip;
+
+    cout << ip;
 
     /* @IP et num port Serveur */
     bzero((char *) &sa_S, sizeof(struct sockaddr));
     sa_S.sin_family = AF_INET;
-    sa_S.sin_addr.s_addr = inet_addr(IP_addr_S);
+    sa_S.sin_addr.s_addr = inet_addr(ip.c_str());
     sa_S.sin_port = htons(UDP_port_S);
 
     /* emission vers le serveur (a partir du client) */
@@ -91,6 +96,7 @@ void receiveBoard(int sock_C, sockaddr_in sa_S, unsigned int taille_sa_S) {
         exit(EXIT_SUCCESS);
     } else {
         system("clear");
+        cout << msg << endl;
     }
 }
 
