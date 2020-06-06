@@ -11,13 +11,14 @@
 #include <iostream>
 
 #define UDP_port_S 8000
-#define IP_addr_S "127.0.0.1"
 
 using namespace std;
 
 void receiveBoard(int sock_C, sockaddr_in sa_S, unsigned int taille_sa_S);
 
 void play(int sock_C, sockaddr_in sa_S, unsigned int taille_sa_S);
+
+bool ipIsValid(string *ip);
 
 int main() {
     int sock_C;
@@ -31,9 +32,16 @@ int main() {
     /* creation socket Client */
     sock_C = socket(PF_INET, SOCK_DGRAM, 0);
 
-    cout << "Enter the server's ip address (example : 157.12.155.154)\n";
     string ip;
-    cin >> ip;
+    while(1){system("clear");
+        cout << "Enter the server's ip address (example : 157.12.155.154)\n";
+        cin >> ip;
+        if(ipIsValid(&ip)){
+            break;
+        }
+        cout << "Wrong IP" << endl;
+    }
+
 
 
     /* @IP et num port Serveur */
@@ -142,4 +150,12 @@ void play(int sock_C, sockaddr_in sa_S, unsigned int taille_sa_S) {
             receiveBoard(sock_C, sa_S, taille_sa_S);
         }
     }
+}
+
+bool ipIsValid(string *ip){
+    int w,x,y,z;
+    int nb = sscanf(ip->c_str(),"%d.%d.%d.%d",&w,&x,&y,&z);
+    cout << w  << x << y << z;
+    cout << nb << endl;
+    return nb == 4 && w >= 0 && w <= 255 && x >= 0 && x <= 255 && y >= 0 && y <= 255 && z >= 0 && z <= 255;
 }
