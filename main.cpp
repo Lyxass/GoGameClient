@@ -31,11 +31,10 @@ int main() {
     /* creation socket Client */
     sock_C = socket(PF_INET, SOCK_DGRAM, 0);
 
-    cout << "Entrer l'adresse IP du serveur : (example : 157.12.155.154)\n";
+    cout << "Enter the server's ip address (example : 157.12.155.154)\n";
     string ip;
     cin >> ip;
 
-    cout << ip;
 
     /* @IP et num port Serveur */
     bzero((char *) &sa_S, sizeof(struct sockaddr));
@@ -45,7 +44,7 @@ int main() {
 
     /* emission vers le serveur (a partir du client) */
     taille_sa_S = sizeof(struct sockaddr);
-    cout << "Enter your pseudo without space. You can use _ instead : TEST" << endl;
+    cout << "Enter your nickname without space. You can use '_' instead : " << endl;
     cin >> message;
     message[2047] = '0';
 
