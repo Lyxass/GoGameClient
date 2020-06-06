@@ -61,8 +61,8 @@ MainWindow::MainWindow(int nbPlay,int sock_C,sockaddr_in sa_S,unsigned int taill
 
 
 
-    scoreJ1->setText(QString("Nb Pawn captured by J1 : 0"));
-    scoreJ2->setText(QString("Nb Pawn captured by J2 : 0"));
+    scoreJ1->setText(QString("Nb of white Pawn captured : 0"));
+    scoreJ2->setText(QString("Nb of black Pawn captured  : 0"));
 
     scoreJ1->setGeometry(0,429,300,20);
     scoreJ2->setGeometry(0,450,300,20);
@@ -191,9 +191,9 @@ void MainWindow::updateMap(){
     vJ2 += message[2047];
     qDebug() << vJ1;
     scoreJ1->clear();
-    scoreJ1->setText("Nb Pawn captured by J1 : " + vJ1);
+    scoreJ1->setText("Nb of white Pawn captured : " + vJ1);
     scoreJ2->clear();
-    scoreJ2->setText("Nb Pawn captured by J2 : " + vJ2);
+    scoreJ2->setText("Nb of black Pawn captured  : " + vJ2);
 
 
     enableButton(false);
