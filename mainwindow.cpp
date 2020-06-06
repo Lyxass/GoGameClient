@@ -12,54 +12,54 @@ MainWindow::MainWindow(int nbPlay,int sock_C,sockaddr_in sa_S,unsigned int taill
     this->blackPawn = QIcon("/home/lyxas/GoGameCleintGui/noir.png");
     this->whitePawn = QIcon("/home/lyxas/GoGameCleintGui/blanc.png");
 
+
     QPixmap *img = new QPixmap("/home/lyxas/GoGameCleintGui/Goban_9x9_.png");
     scene->addPixmap(*img);
     this->view= new QGraphicsView(scene);
     int offsetx = 0;
     int offsety = 0;
-    int x = 0;
-    int y = 0;
-    offsety = -8;
+    int x = 52;
+    int y = 52;
+    offsety = -16;
     for(int i=0; i<9; i++){
-        x = 0;
-        offsetx = -8;
+        offsetx = -16;
         for(int o=0;o<9;o++){
            matrix[i][o] =new GoPawn(i,o,this);
            matrix[i][o]->setMinimumSize(QSize(1,1));
-            x+=1;
-            matrix[i][o]->setGeometry(x+offsetx,y+offsety,45,45);
-            offsetx +=49;
-            if(i%2 == 0){
-                if(o%2 == 0){
-                    matrix[i][o]->setStyleSheet("background-color: rgba(255, 25, 255, 0.2);");
-                }
-                else{
-                    matrix[i][o]->setStyleSheet("background-color: rgba(25, 255, 255, 0.2);");
-                }
-            }
-            else{
-                if(o%2 == 0){
-                    matrix[i][o]->setStyleSheet("background-color: rgba(25, 255, 255, 0.2);");
-                }
-                else{
-                    matrix[i][o]->setStyleSheet("background-color: rgba(255, 25, 255, 0.2);");
-                }
-            }
+           matrix[i][o]->setGeometry(offsetx,offsety,52,52);
+           offsetx +=51;
+           matrix[i][o]->setStyleSheet("background-color: rgba(255, 25, 255, 0.0);");
+//           if(i%2 == 0){
+//                if(o%2 == 0){
+//                    matrix[i][o]->setStyleSheet("background-color: rgba(255, 25, 255, 0.2);");
+//                }
+//                else{
+//                    matrix[i][o]->setStyleSheet("background-color: rgba(25, 255, 255, 0.2);");
+//                }
+//            }
+//            else{
+//                if(o%2 == 0){
+//                    matrix[i][o]->setStyleSheet("background-color: rgba(25, 255, 255, 0.2);");
+//                }
+//                else{
+//                    matrix[i][o]->setStyleSheet("background-color: rgba(255, 25, 255, 0.2);");
+//                }
+//            }
             matrix[i][o]->setFlat(true);
             matrix[i][o]->setUpdatesEnabled(false);
             scene ->addWidget(matrix[i][o]);
         }
-        y += 1;
-        offsety += 49;
-
+        offsety += 51;
 
     }
 
     scoreJ1 = new GoLabel();
     scoreJ2 = new GoLabel();
 
-    scoreJ1->setStyleSheet("background-color: rgba(255, 255, 255, 0.0);");
-    scoreJ2->setStyleSheet("background-color: rgba(255, 255, 255, 0.0);");
+    scoreJ1->setStyleSheet("background-color: rgba(255, 255, 255, 0.0); color: white;");
+    scoreJ2->setStyleSheet("background-color: rgba(255, 255, 255, 0.0); color: white;");
+
+
 
     scoreJ1->setText(QString("Nb Pawn captured by J1 : 0"));
     scoreJ2->setText(QString("Nb Pawn captured by J2 : 0"));
@@ -70,7 +70,11 @@ MainWindow::MainWindow(int nbPlay,int sock_C,sockaddr_in sa_S,unsigned int taill
     scene->addWidget(scoreJ2);
     passButton = new GoPassButton("Skip your turn",this,this);
     passButton->setGeometry(329,429,100,41);
+    passButton->setStyleSheet("background-color: rgba(255, 255, 255, 0.0); color: white;");
+    passButton->setFlat(true);
+    passButton->setUpdatesEnabled(false);
     scene->addWidget(passButton);
+
 
 }
 
@@ -130,9 +134,11 @@ void MainWindow::play(GoPawn *p){
     if(this->getPlayerNb() == 2){
         qDebug() << "OUI !!";
         matrix[p->getX()][p->getY()]->setIcon(QIcon(QPixmap("/home/lyxas/GoGameCleintGui/noir.png")));
+        matrix[p->getX()][p->getY()]->setIconSize(QSize(40,40));
     }
     else if(this->getPlayerNb() == 1){
         matrix[p->getX()][p->getY()]->setIcon(QIcon(QPixmap("/home/lyxas/GoGameCleintGui/blanc.png")));
+        matrix[p->getX()][p->getY()]->setIconSize(QSize(40,40));
     }
 
     enableButton(false);
@@ -159,11 +165,11 @@ void MainWindow::updateMap(){
     for(int o=0;o<81;o++){
         if(message[o]=='X'){
             matrix[o/9][o%9]->setIcon(QIcon(QPixmap("/home/lyxas/GoGameCleintGui/noir.png")));
-           // matrix[o/9][o%9]->setIconSize(QSize(20,20));
+            matrix[o/9][o%9]->setIconSize(QSize(40,40));
         }
         else if(message[o]=='O'){
             matrix[o/9][o%9]->setIcon(QIcon(QPixmap("/home/lyxas/GoGameCleintGui/blanc.png")));
-            //matrix[o/9][o%9]->setIconSize(QSize(20,20));
+            matrix[o/9][o%9]->setIconSize(QSize(40,40));
         }
         else if(message[o] == '#'){
             matrix[o/9][o%9]->setIcon(QIcon());

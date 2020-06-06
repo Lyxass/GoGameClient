@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <QMessageBox>
+#include <ipwindow.h>
 
 #define UDP_port_S 8000
 #define IP_addr_S "127.0.0.1"
@@ -32,11 +33,20 @@ int main(int argc, char *argv[])
     /* creation socket Client */
     sock_C = socket(PF_INET, SOCK_DGRAM, 0);
 
+    IpWindow *ipWindow = new IpWindow();
+
+    while(1){
+       ipWindow->exec();
+       if(!ipWindow->getError()){
+           break;
+       }
+    }
+    std::string ip= ipWindow->getIp().toStdString();
 
     /* @IP et num port Serveur */
     bzero((char *) &sa_S, sizeof(struct sockaddr));
     sa_S.sin_family = AF_INET;
-    sa_S.sin_addr.s_addr = inet_addr(IP_addr_S);
+    sa_S.sin_addr.s_addr = inet_addr(ip.c_str());
     sa_S.sin_port = htons(UDP_port_S);
 
     /* emission vers le serveur (a partir du client) */
@@ -58,6 +68,7 @@ int main(int argc, char *argv[])
     if(message[0] - '0' == 1){
         vue = new MainWindow(1,sock_C,sa_S,taille_sa_S);
         QGraphicsView *tst =vue->getView();
+        tst->setStyleSheet("background-color: rgba(240, 176, 99, 1);");        tst->show();
         tst->show();
         QMessageBox::information(vue,"Wait","Waiting another player");
         vue->updateMap();
@@ -67,7 +78,7 @@ int main(int argc, char *argv[])
     else if(message[0] - '0' == 2){
         vue = new MainWindow(2,sock_C,sa_S,taille_sa_S);
         QGraphicsView *tst =vue->getView();
-        tst->show();
+        tst->setStyleSheet("background-color: rgba(240, 176, 99, 1);");        tst->show();
         QMessageBox::information(vue,"Wait","The other player is playing");
         vue->updateMap();
         vue->updateMap();
