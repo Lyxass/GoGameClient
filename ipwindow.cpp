@@ -39,9 +39,9 @@ void IpWindow::onClicked(){
     int w,x,y,z;
 
     w = QString(ip1->text()).toInt(NULL,10);
-    x = QString(ip1->text()).toInt(NULL,10);
-    y = QString(ip1->text()).toInt(NULL,10);
-    z = QString(ip1->text()).toInt(NULL,10);
+    x = QString(ip2->text()).toInt(NULL,10);
+    y = QString(ip3->text()).toInt(NULL,10);
+    z = QString(ip4->text()).toInt(NULL,10);
 
     if(w>255 || w<0 ||x>255 || x<0 || y>255 || y<0 || z>255 || z<0 ){
         QMessageBox::warning(this,"IP invalid","Wrong Ip address");

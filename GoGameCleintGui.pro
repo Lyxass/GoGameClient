@@ -20,3 +20,6 @@ DISTFILES += \
     Goban_9x9_.png \
     blanc.png \
     noir.png
+
+RESOURCES += \
+    Goban.qrc

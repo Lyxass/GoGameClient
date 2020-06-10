@@ -9,17 +9,15 @@ MainWindow::MainWindow(int nbPlay,int sock_C,sockaddr_in sa_S,unsigned int taill
     this->taille_sa_S = taille_sa_S;
     this->setFixedSize(429,429);
     this->scene = new QGraphicsScene();
-    this->blackPawn = QIcon("/home/lyxas/GoGameCleintGui/noir.png");
-    this->whitePawn = QIcon("/home/lyxas/GoGameCleintGui/blanc.png");
+    this->blackPawn = QIcon(":/images/noir.png");
+    this->whitePawn = QIcon(":/images/blanc.png");
 
 
-    QPixmap *img = new QPixmap("/home/lyxas/GoGameCleintGui/Goban_9x9_.png");
+    QPixmap *img = new QPixmap(":/images/Goban_9x9_.png");
     scene->addPixmap(*img);
     this->view= new QGraphicsView(scene);
     int offsetx = 0;
     int offsety = 0;
-    int x = 52;
-    int y = 52;
     offsety = -16;
     for(int i=0; i<9; i++){
         offsetx = -16;
@@ -133,11 +131,11 @@ void MainWindow::play(GoPawn *p){
     }
     if(this->getPlayerNb() == 2){
         qDebug() << "OUI !!";
-        matrix[p->getX()][p->getY()]->setIcon(QIcon(QPixmap("/home/lyxas/GoGameCleintGui/noir.png")));
+        matrix[p->getX()][p->getY()]->setIcon(QIcon(QPixmap(":/images/noir.png")));
         matrix[p->getX()][p->getY()]->setIconSize(QSize(40,40));
     }
     else if(this->getPlayerNb() == 1){
-        matrix[p->getX()][p->getY()]->setIcon(QIcon(QPixmap("/home/lyxas/GoGameCleintGui/blanc.png")));
+        matrix[p->getX()][p->getY()]->setIcon(QIcon(QPixmap(":/images/blanc.png")));
         matrix[p->getX()][p->getY()]->setIconSize(QSize(40,40));
     }
 
@@ -164,11 +162,11 @@ void MainWindow::updateMap(){
     }
     for(int o=0;o<81;o++){
         if(message[o]=='X'){
-            matrix[o/9][o%9]->setIcon(QIcon(QPixmap("/home/lyxas/GoGameCleintGui/noir.png")));
+            matrix[o/9][o%9]->setIcon(QIcon(QPixmap(":/images/noir.png")));
             matrix[o/9][o%9]->setIconSize(QSize(40,40));
         }
         else if(message[o]=='O'){
-            matrix[o/9][o%9]->setIcon(QIcon(QPixmap("/home/lyxas/GoGameCleintGui/blanc.png")));
+            matrix[o/9][o%9]->setIcon(QIcon(QPixmap(":/images/blanc.png")));
             matrix[o/9][o%9]->setIconSize(QSize(40,40));
         }
         else if(message[o] == '#'){

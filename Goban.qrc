@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>blanc.png</file>
+        <file>Goban_9x9_.png</file>
+        <file>noir.png</file>
+    </qresource>
+</RCC>
