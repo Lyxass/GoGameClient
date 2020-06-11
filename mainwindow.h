@@ -31,8 +31,6 @@ public:
     ~MainWindow();
 private:
     GoPawn *matrix[9][9];
-    QIcon blackPawn;
-    QIcon whitePawn;
     QGraphicsScene *scene;
     QGraphicsView *view;
     int nbPlayer;

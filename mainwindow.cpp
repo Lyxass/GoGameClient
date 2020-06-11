@@ -9,8 +9,7 @@ MainWindow::MainWindow(int nbPlay,int sock_C,sockaddr_in sa_S,unsigned int taill
     this->taille_sa_S = taille_sa_S;
     this->setFixedSize(429,429);
     this->scene = new QGraphicsScene();
-    this->blackPawn = QIcon(":/images/noir.png");
-    this->whitePawn = QIcon(":/images/blanc.png");
+
 
 
     QPixmap *img = new QPixmap(":/images/Goban_9x9_.png");
