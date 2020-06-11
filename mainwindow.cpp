@@ -116,7 +116,6 @@ void MainWindow::play(GoPawn *p){
     message[1] = ',';
     message[2] = p->getY() + '0';
     message[3] = '\000';
-    qDebug() << message << endl;
     sendto(sock_C, message, 2048 * sizeof(char), 0,
            (struct sockaddr *) &sa_S, taille_sa_S);
 
@@ -152,7 +151,6 @@ void MainWindow::updateMap(){
     recvfrom(sock_C, message, 2048 * sizeof(char), 0,
              (struct sockaddr *) &sa_S, &taille_sa_S);
     enableButton(true);
-    qDebug() << message;
     QString tmp(message);
     if(tmp.contains("stop")){
         enableButton(false);
@@ -181,12 +179,10 @@ void MainWindow::updateMap(){
     vJ1 += message[2042];
     vJ1 += message[2043];
     vJ1 += message[2044];
-    qDebug() << vJ1;
-
     vJ2 += message[2045];
     vJ2 += message[2046];
     vJ2 += message[2047];
-    qDebug() << vJ1;
+
     scoreJ1->clear();
     scoreJ1->setText("Nb of white Pawn captured : " + vJ1);
     scoreJ2->clear();
