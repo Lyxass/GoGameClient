@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef GOPAWN_H
 #define GOPAWN_H
 

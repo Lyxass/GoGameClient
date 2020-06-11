@@ -57,7 +57,6 @@ int main(int argc, char *argv[])
     message[3] = '1';
     message[4] = '\000';
     message[2047] = '1';
-    qDebug() << "test Socket";
     sendto(sock_C, message, 2048 * sizeof(char), 0,
            (struct sockaddr *) &sa_S, taille_sa_S);
 

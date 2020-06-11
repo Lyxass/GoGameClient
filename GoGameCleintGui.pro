@@ -1,6 +1,6 @@
 QT += core gui
 QT += widgets
-
+QMAKE_CXXFLAGS += "-fno-sized-deallocation"
 SOURCES += \
     golabel.cpp \
     gopassbutton.cpp \
