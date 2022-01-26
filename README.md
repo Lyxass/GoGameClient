@@ -1,8 +1,6 @@
 # Go Game Client
 
-This very basic software has been realized during a network lesson. The purpose was tu use socket connection to make a game.
-This software permit to play [Go Game](https://en.wikipedia.org/wiki/Go_(game)) with a remote computer.
-This software use Qt as the GUI framework with the C++ language.
+This very basic software has been realized during a network lesson. The purpose was to use a socket connection to make a game. This software permits you to play [Go Game](https://en.wikipedia.org/wiki/Go_(game)) with a remote computer. This software use Qt as the GUI framework with the C++ language.
 
 <strong>This project only works on linux.</strong>
 
@@ -13,7 +11,7 @@ You can import the project in the IDE and simply run it.
 
 ### If you don't have QT Creator
 
-You can download the prebuild file in the release section on [the github page]()
+You can download the prebuild file in the release section on [the github page](https://github.com/Lyxass/GoGameClient/releases)
 
 
 ### Once your client is ready
